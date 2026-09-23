@@ -6,9 +6,14 @@
 "ZRNG_I_BILL_HEADER"
 ],
 "ASSOCIATED":
-[],
+[
+"ZRNG_C_BILL_ITEM",
+"ZRNG_I_BILL_ITEM"
+],
 "BASE":
-[],
+[
+"ZRNG_I_BILL_HEADER"
+],
 "ANNO_REF":
 [],
 "SCALAR_FUNCTION":

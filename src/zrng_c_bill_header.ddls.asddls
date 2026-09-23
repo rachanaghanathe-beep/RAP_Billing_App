@@ -1,11 +1,11 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
-@EndUserText.label: 'Billing document header - Projection View'
-@Metadata.ignorePropagatedAnnotations: true
+@EndUserText.label: 'Projection View of Billing Doc Header'
 @Metadata.allowExtensions: true
-define root view entity ZRNG_C_BILL_HEADER
-  provider contract transactional_query as projection on ZRNG_I_BILL_HEADER
+define root view entity zrng_c_bill_header
+  provider contract transactional_query
+  as projection on ZRNG_I_BILL_HEADER
 {
-     key BillId,
+  key BillId,
       BillType,
       BillDate,
       CustomerId,
@@ -17,5 +17,7 @@ define root view entity ZRNG_C_BILL_HEADER
       CreatedAt,
       LastChangedBy,
       LastChangeDat,
-      LocalLastChangeDat
+      LocalLastChangeDat,
+      
+      _item: redirected to composition child Zrng_C_Bill_Item
 }

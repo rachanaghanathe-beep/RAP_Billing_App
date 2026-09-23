@@ -1,4 +1,5 @@
 @EndUserText.label: 'Billing Data - SD'
 define service ZRNG_SD_BILL_HDR {
-  expose ZRNG_C_BILL_HEADER as BillingDocumentHedaer;
+  expose zrng_c_bill_header as BillingDocumentHedaer;
+  expose Zrng_C_Bill_Item   as BillingDocumentItem;
 }

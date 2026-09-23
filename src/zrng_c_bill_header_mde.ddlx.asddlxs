@@ -1,50 +1,116 @@
 @Metadata.layer: #CORE
-@UI: {
-  headerInfo: { typeName: 'Billing Document Header',
-                typeNamePlural: 'Billing Documents',
-                title: { type: #STANDARD, label: 'Travel', value: 'BillID' } }
-              }
-annotate entity ZRNG_C_BILL_HEADER with
+annotate entity zrng_c_bill_header with
 {
-  @UI.facet: [ { id:              'BillingDocHead',
-                   purpose:         #STANDARD,
-                   type:            #IDENTIFICATION_REFERENCE,
-                   label:           'Header',
-                   position:        10 } ]
+  @UI.facet: [
+    {
+      id:            'HeaderFacet',
+      purpose:       #STANDARD,
+      type:          #IDENTIFICATION_REFERENCE,
+      label:         'Header Information',
+      position:      10
+    },
+    {
+      id:            'ItemsFacet',
+      purpose:       #STANDARD,
+      type:          #LINEITEM_REFERENCE,    // Renders child table + Create button
+      label:         'Billing Items',
+      position:      20,
+      targetElement: '_item'
+    }
+  ]
+
   @EndUserText.label: 'Billing Document'
-  @UI: {  lineItem:       [ { position: 10 } ],
-          identification: [ { position: 10 } ],
-          selectionField: [ { position: 10 } ] }
+  @UI: {
+    lineItem:       [ { position: 10 } ],
+    identification: [ { position: 10 } ],
+    selectionField: [ { position: 10 } ]
+  }
   BillId;
-  
-  @EndUserText.label: 'Billing Document Type'
-  @UI: {  lineItem:       [ { position: 20 } ],
-       identification: [ { position: 20 } ],
-       selectionField: [ { position: 20 } ] }
+
+  @EndUserText.label: 'Billing Type'
+  @UI: {
+    lineItem:       [ { position: 20 } ],
+    identification: [ { position: 20 } ]
+  }
   BillType;
-  
+
   @EndUserText.label: 'Billing Date'
-  @UI: {  lineItem:       [ { position: 30 } ] ,
-        identification: [ { position: 30 } ]}
+  @UI: {
+    lineItem:       [ { position: 30 } ],
+    identification: [ { position: 30 } ]
+  }
   BillDate;
-  
-  @EndUserText.label: 'Customer'
-  @UI: {  lineItem:       [ { position: 40 } ] ,
-        identification: [ { position: 40 } ]}
+
+  @EndUserText.label: 'Customer ID'
+  @UI: {
+    lineItem:       [ { position: 40 } ],
+    identification: [ { position: 40 } ]
+  }
   CustomerId;
-  
+
   @EndUserText.label: 'Net Amount'
-  @UI: {  lineItem:       [ { position: 50 } ] ,
-        identification: [ { position: 50 } ]}
+  @UI: {
+    lineItem:       [ { position: 50 } ],
+    identification: [ { position: 50 } ]
+  }
   NetAmount;
-  
-  @EndUserText.label: 'Currency'
-  @UI: {  lineItem:       [ { position: 60 } ] ,
-        identification: [ { position: 60 } ]}
-  Currency;
-  
+
   @EndUserText.label: 'Sales Organization'
-  @UI: {  lineItem:       [ { position: 70 } ] ,
-        identification: [ { position: 70 } ]}
+  @UI: {
+    lineItem:       [ { position: 60 } ],
+    identification: [ { position: 60 } ]
+  }
   SalesOrg;
 }
+
+
+//@Metadata.layer: #CORE
+//@UI: {
+//  headerInfo: { typeName: 'Billing Document Header',
+//                typeNamePlural: 'Billing Documents',
+//                title: { type: #STANDARD, label: 'Travel', value: 'BillID' } }
+//              }
+//annotate entity ZRNG_C_BILL_HEADER with
+//{
+//  @UI.facet: [ { id:              'BillingDocHead',
+//                   purpose:         #STANDARD,
+//                   type:            #IDENTIFICATION_REFERENCE,
+//                   label:           'Header',
+//                   position:        10 } ]
+//  @EndUserText.label: 'Billing Document'
+//  @UI: {  lineItem:       [ { position: 10 } ],
+//          identification: [ { position: 10 } ],
+//          selectionField: [ { position: 10 } ] }
+//  BillId;
+//  
+//  @EndUserText.label: 'Billing Document Type'
+//  @UI: {  lineItem:       [ { position: 20 } ],
+//       identification: [ { position: 20 } ],
+//       selectionField: [ { position: 20 } ] }
+//  BillType;
+//  
+//  @EndUserText.label: 'Billing Date'
+//  @UI: {  lineItem:       [ { position: 30 } ] ,
+//        identification: [ { position: 30 } ]}
+//  BillDate;
+//  
+//  @EndUserText.label: 'Customer'
+//  @UI: {  lineItem:       [ { position: 40 } ] ,
+//        identification: [ { position: 40 } ]}
+//  CustomerId;
+//  
+//  @EndUserText.label: 'Net Amount'
+//  @UI: {  lineItem:       [ { position: 50 } ] ,
+//        identification: [ { position: 50 } ]}
+//  NetAmount;
+//  
+//  @EndUserText.label: 'Currency'
+//  @UI: {  lineItem:       [ { position: 60 } ] ,
+//        identification: [ { position: 60 } ]}
+//  Currency;
+//  
+//  @EndUserText.label: 'Sales Organization'
+//  @UI: {  lineItem:       [ { position: 70 } ] ,
+//        identification: [ { position: 70 } ]}
+//  SalesOrg;
+//}

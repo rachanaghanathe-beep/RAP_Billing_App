@@ -1,9 +1,28 @@
 projection;
 strict ( 2 );
 
-define behavior for ZRNG_C_BILL_HEADER alias BillingHeader
+define behavior for ZRNG_C_BILL_HEADER alias Header
 {
   use create;
   use update;
   use delete;
+
+  use association _item { create; }
 }
+
+define behavior for Zrng_C_Bill_Item alias Item
+{
+  use update;
+  use delete;
+
+  use association _header;
+}
+//projection;
+//strict ( 2 );
+//
+//define behavior for ZRNG_C_BILL_HEADER alias BillingHeader
+//{
+//  use create;
+//  use update;
+//  use delete;
+//}
