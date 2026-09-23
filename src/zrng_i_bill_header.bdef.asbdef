@@ -1,0 +1,30 @@
+managed implementation in class zbp_rng_i_bill_header unique;
+strict ( 2 );
+
+define behavior for ZRNG_I_BILL_HEADER //alias <alias_name>
+persistent table zrng_bill_header
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+  field ( readonly:update, mandatory : create ) BillId;
+
+  mapping for zrng_bill_header
+    {
+      BillId     = bill_id;
+      BillType   = bill_type;
+      BillDate   = bill_date;
+      CustomerId = customer_id;
+      NetAmount  = net_amount;
+      Currency   = currency;
+      SalesOrg   = sales_org;
+      CreatedBy = created_by;
+      CreateDat = created_at;
+      LastChangedBy = last_changed_by;
+      LastChangedAt = last_changed_at;
+      LocalLastChangedAt = local_last_changed_at;
+    }
+}

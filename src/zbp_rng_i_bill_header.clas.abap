@@ -1,0 +1,5 @@
+CLASS zbp_rng_i_bill_header DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zrng_i_bill_header.
+ENDCLASS.
+
+CLASS zbp_rng_i_bill_header IMPLEMENTATION.
+ENDCLASS.
