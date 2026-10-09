@@ -10,7 +10,7 @@ authorization master ( instance, global )
 etag master LocalLastChangeDat
 early numbering
 {
-  create;
+  create (precheck) ;
   update;
   delete;
 
@@ -24,6 +24,9 @@ early numbering
   field ( readonly ) BillId;
 
   association _item { create; with draft; }
+
+  // Validation definition
+  validation validateAmount on save { field NetAmount; create; update; }
 
   mapping for zrng_bill_header
   {
