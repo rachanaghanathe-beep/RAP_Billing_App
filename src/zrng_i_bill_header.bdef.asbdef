@@ -28,6 +28,8 @@ early numbering
   // Validation definition
   validation validateAmount on save { field NetAmount; create; update; }
 
+  action updateBillingDate result [1] $self;
+
   mapping for zrng_bill_header
   {
     BillId             = bill_id;

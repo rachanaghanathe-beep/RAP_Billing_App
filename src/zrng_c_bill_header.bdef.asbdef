@@ -14,6 +14,8 @@ define behavior for ZRNG_C_BILL_HEADER alias Header
   use action Discard;
   use action Prepare;
 
+  use action updateBillingDate;
+
   use association _item { create; with draft; }
 }
 

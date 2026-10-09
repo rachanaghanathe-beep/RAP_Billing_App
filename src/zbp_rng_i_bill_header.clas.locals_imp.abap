@@ -10,6 +10,8 @@ CLASS lhc_ZRNG_I_BILL_HEADER DEFINITION INHERITING FROM cl_abap_behavior_handler
 
     METHODS validateamount FOR VALIDATE ON SAVE
       keys FOR header~validateamount.
+    METHODS updatebillingdate FOR MODIFY
+      keys FOR ACTION header~updatebillingdate RESULT result.
 
     METHODS earlynumbering_create FOR NUMBERING
       entities FOR CREATE header.
@@ -89,6 +91,29 @@ CLASS lhc_ZRNG_I_BILL_HEADER IMPLEMENTATION.
   ENDLOOP.
   ENDMETHOD.
 
+  METHOD updateBillingDate.
+
+    MODIFY ENTITIES OF Zrng_I_BILL_HEADER IN LOCAL MODE
+        ENTITY Zrng_I_BILL_HEADER
+           UPDATE FROM VALUE #( FOR key IN keys
+           ( %tky   = key-%tky
+             BillDate = cl_abap_context_info=>get_system_date( )
+             %control-BillDate = if_abap_behv=>mk-on ) )
+           FAILED failed
+           REPORTED reported.
+
+  "Read changed data for action result
+  READ ENTITIES OF Zrng_I_BILL_HEADER IN LOCAL MODE
+    ENTITY Zrng_I_BILL_HEADER
+    ALL FIELDS WITH
+    CORRESPONDING #( keys )
+    RESULT DATA(lt_billdocs).
+
+  result = VALUE #( FOR ls_billdoc IN lt_billdocs
+           ( %tky   = ls_billdoc-%tky
+             %param = ls_billdoc ) ).
+  ENDMETHOD.
+
   METHOD precheck_create.
 
   LOOP AT entities INTO DATA(ls_entity).
@@ -133,5 +158,7 @@ CLASS lhc_ZRNG_I_BILL_HEADER IMPLEMENTATION.
   ENDLOOP.
 
   ENDMETHOD.
+
+
 
 ENDCLASS.
