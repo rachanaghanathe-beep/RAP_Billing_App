@@ -1,5 +1,6 @@
 projection;
 strict ( 2 );
+use draft;
 
 define behavior for ZRNG_C_BILL_HEADER alias Header
 {
@@ -7,7 +8,13 @@ define behavior for ZRNG_C_BILL_HEADER alias Header
   use update;
   use delete;
 
-  use association _item { create; }
+  use action Edit;
+  use action Resume;
+  use action Activate;
+  use action Discard;
+  use action Prepare;
+
+  use association _item { create; with draft; }
 }
 
 define behavior for Zrng_C_Bill_Item alias Item
@@ -15,7 +22,7 @@ define behavior for Zrng_C_Bill_Item alias Item
   use update;
   use delete;
 
-  use association _header;
+  use association _header  { with draft; }
 }
 //projection;
 //strict ( 2 );

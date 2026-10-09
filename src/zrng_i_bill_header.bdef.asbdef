@@ -1,18 +1,29 @@
 managed implementation in class zbp_rng_i_bill_header unique;
 strict ( 2 );
+with draft;
 
 define behavior for ZRNG_I_BILL_HEADER alias Header
 persistent table zrng_bill_header
-lock master
-authorization master ( instance )
+draft table zrng_d_bill_head
+lock master total etag LastChangeDat
+authorization master ( instance, global )
+etag master LocalLastChangeDat
+early numbering
 {
   create;
   update;
   delete;
 
-  field ( readonly : update, mandatory : create ) BillId;
+  draft action Edit;
+  draft action Resume;
+  draft action Activate optimized;
+  draft action Discard;
+  draft determine action Prepare;
 
-  association _item { create; }
+
+  field ( readonly ) BillId;
+
+  association _item { create; with draft; }
 
   mapping for zrng_bill_header
   {
@@ -33,15 +44,17 @@ authorization master ( instance )
 
 define behavior for zrng_i_bill_item alias Item
 persistent table zrng_bill_item
+draft table zrng_d_bill_item
 lock dependent by _header
+early numbering
 authorization dependent by _header
 {
   update;
   delete;
 
-  field ( readonly : update, mandatory : create ) BillId, ItemNo;
+  field ( readonly ) BillId, ItemNo;
 
-  association _header;
+  association _header { with draft; }
 
   mapping for zrng_bill_item
   {
