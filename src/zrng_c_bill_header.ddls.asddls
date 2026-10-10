@@ -19,5 +19,6 @@ define root view entity zrng_c_bill_header
       LastChangeDat,
       LocalLastChangeDat,
       
-      _item: redirected to composition child Zrng_C_Bill_Item
+      _item: redirected to composition child Zrng_C_Bill_Item,
+      _AuditLog
 }

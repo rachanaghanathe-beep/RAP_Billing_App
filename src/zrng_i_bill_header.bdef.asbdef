@@ -9,6 +9,7 @@ lock master total etag LastChangeDat
 authorization master ( instance, global )
 etag master LocalLastChangeDat
 early numbering
+with additional save
 {
   create (precheck) ;
   update;

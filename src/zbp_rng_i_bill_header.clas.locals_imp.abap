@@ -1,3 +1,115 @@
+CLASS lsc_zrng_i_bill_header DEFINITION INHERITING FROM cl_abap_behavior_saver.
+
+  PROTECTED SECTION.
+
+    METHODS save_modified REDEFINITION.
+
+ENDCLASS.
+
+CLASS lsc_zrng_i_bill_header IMPLEMENTATION.
+
+  METHOD save_modified.
+
+  DATA: lt_log TYPE TABLE OF zrng_audit_log.
+
+  TRY.
+
+    IF create-header IS NOT INITIAL.
+      LOOP AT create-header INTO DATA(ls_create).
+        APPEND VALUE #(
+          client     = sy-mandt
+          uuid       = cl_system_uuid=>create_uuid_x16_static( )
+          bill_id    = ls_create-BillId
+          operation  = 'CREATE'
+          field_name = 'BillType'
+          old_value  = ''
+          new_value  = ls_create-BillType
+          changed_by = cl_abap_context_info=>get_user_technical_name( )
+*          changed_at = cl_abap_context_info=>get_system_time( )
+        ) TO lt_log.
+
+        APPEND VALUE #(
+          client     = sy-mandt
+          uuid       = cl_system_uuid=>create_uuid_x16_static( )
+          bill_id    = ls_create-BillId
+          operation  = 'CREATE'
+          field_name = 'CustomerId'
+          old_value  = ''
+          new_value  = ls_create-CustomerId
+          changed_by = cl_abap_context_info=>get_user_technical_name( )
+*          changed_at = cl_abap_context_info=>get_system_time( )
+        ) TO lt_log.
+
+        APPEND VALUE #(
+          client     = sy-mandt
+          uuid       = cl_system_uuid=>create_uuid_x16_static( )
+          bill_id    = ls_create-BillId
+          operation  = 'CREATE'
+          field_name = 'NetAmount'
+          old_value  = ''
+          new_value  = CONV #( ls_create-NetAmount )
+          changed_by = cl_abap_context_info=>get_user_technical_name( )
+*          changed_at = cl_abap_context_info=>get_system_time( )
+        ) TO lt_log.
+      ENDLOOP.
+    ENDIF.
+
+    IF update-header IS NOT INITIAL.
+      LOOP AT update-header INTO DATA(ls_update).
+        IF ls_update-%control-BillType = if_abap_behv=>mk-on.
+          APPEND VALUE #(
+            client     = sy-mandt
+            uuid       = cl_system_uuid=>create_uuid_x16_static( )
+            bill_id    = ls_update-BillId
+            operation  = 'UPDATE'
+            field_name = 'BillType'
+            old_value  = ''
+            new_value  = ls_update-BillType
+            changed_by = cl_abap_context_info=>get_user_technical_name( )
+*            changed_at = cl_abap_context_info=>get_system_time( )
+          ) TO lt_log.
+        ENDIF.
+
+        IF ls_update-%control-CustomerId = if_abap_behv=>mk-on.
+          APPEND VALUE #(
+            client     = sy-mandt
+            uuid       = cl_system_uuid=>create_uuid_x16_static( )
+            bill_id    = ls_update-BillId
+            operation  = 'UPDATE'
+            field_name = 'CustomerId'
+            old_value  = ''
+            new_value  = ls_update-CustomerId
+            changed_by = cl_abap_context_info=>get_user_technical_name( )
+*            changed_at = cl_abap_context_info=>get_system_time( )
+          ) TO lt_log.
+        ENDIF.
+
+        IF ls_update-%control-NetAmount = if_abap_behv=>mk-on.
+          APPEND VALUE #(
+            client     = sy-mandt
+            uuid       = cl_system_uuid=>create_uuid_x16_static( )
+            bill_id    = ls_update-BillId
+            operation  = 'UPDATE'
+            field_name = 'NetAmount'
+            old_value  = ''
+            new_value  = CONV #( ls_update-NetAmount )
+            changed_by = cl_abap_context_info=>get_user_technical_name( )
+*            changed_at = cl_abap_context_info=>get_system_time( )
+          ) TO lt_log.
+        ENDIF.
+      ENDLOOP.
+    ENDIF.
+
+    CATCH cx_uuid_error.
+  ENDTRY.
+
+  IF lt_log IS NOT INITIAL.
+    INSERT zrng_audit_log FROM TABLE @lt_log.
+  ENDIF.
+  ENDMETHOD.
+
+ENDCLASS.
+
 CLASS lhc_ZRNG_I_BILL_HEADER DEFINITION INHERITING FROM cl_abap_behavior_handler.
   PRIVATE SECTION.
 

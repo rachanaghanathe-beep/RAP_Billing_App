@@ -4,6 +4,8 @@
 define root view entity ZRNG_I_BILL_HEADER
   as select from zrng_bill_header
   composition [0..*] of zrng_i_bill_item as _item
+ association [0..*] to ZRNG_I_AUDIT_LOG as _AuditLog
+  on $projection.BillId = _AuditLog.BillId
 {
     
      key bill_id               as BillId,
@@ -28,5 +30,6 @@ define root view entity ZRNG_I_BILL_HEADER
       @Semantics.systemDateTime.localInstanceLastChangedAt: true
       local_last_changed_at   as LocalLastChangeDat,
       
-      _item
+      _item,
+      _AuditLog
 }

@@ -16,6 +16,14 @@ annotate entity zrng_c_bill_header with
       label:         'Billing Items',
       position:      20,
       targetElement: '_item'
+    },
+     {
+      id:            'AuditLogFacet',
+      purpose:       #STANDARD,
+      type:          #LINEITEM_REFERENCE,
+      label:         'Audit Log',
+      position:      30,
+      targetElement: '_AuditLog'
     }
   ]
 
