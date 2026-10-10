@@ -30,6 +30,7 @@ early numbering
 
   action updateBillingDate result [1] $self;
   factory action CopyBillingDoc [1];
+  determination setDefaults on modify { create; }
 
   mapping for zrng_bill_header
   {

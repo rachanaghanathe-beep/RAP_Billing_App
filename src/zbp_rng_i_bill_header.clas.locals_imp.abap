@@ -14,6 +14,8 @@ CLASS lhc_ZRNG_I_BILL_HEADER DEFINITION INHERITING FROM cl_abap_behavior_handler
       keys FOR ACTION header~updatebillingdate RESULT result.
     METHODS copybillingdoc FOR MODIFY
       keys FOR ACTION header~copybillingdoc.
+    METHODS setdefaults FOR DETERMINE ON MODIFY
+      keys FOR header~setdefaults.
 
     METHODS earlynumbering_create FOR NUMBERING
       entities FOR CREATE header.
@@ -187,6 +189,18 @@ CLASS lhc_ZRNG_I_BILL_HEADER IMPLEMENTATION.
 
     mapped-header = mapped_create-header.
   ENDLOOP.
+
+  ENDMETHOD.
+
+  METHOD setDefaults.
+
+  MODIFY ENTITIES OF zrng_i_bill_header IN LOCAL MODE
+    ENTITY Header
+    UPDATE FIELDS ( BillType )
+    WITH VALUE #( FOR key IN keys
+      ( %tky     = key-%tky
+        BillType = 'V3' ) )
+    REPORTED DATA(rep).
 
   ENDMETHOD.
 
