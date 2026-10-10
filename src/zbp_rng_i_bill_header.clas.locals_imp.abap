@@ -12,6 +12,8 @@ CLASS lhc_ZRNG_I_BILL_HEADER DEFINITION INHERITING FROM cl_abap_behavior_handler
       keys FOR header~validateamount.
     METHODS updatebillingdate FOR MODIFY
       keys FOR ACTION header~updatebillingdate RESULT result.
+    METHODS copybillingdoc FOR MODIFY
+      keys FOR ACTION header~copybillingdoc.
 
     METHODS earlynumbering_create FOR NUMBERING
       entities FOR CREATE header.
@@ -160,5 +162,32 @@ CLASS lhc_ZRNG_I_BILL_HEADER IMPLEMENTATION.
   ENDMETHOD.
 
 
+
+  METHOD CopyBillingDoc.
+
+      READ ENTITIES OF zrng_i_bill_header IN LOCAL MODE
+    ENTITY Header
+    ALL FIELDS WITH CORRESPONDING #( keys )
+    RESULT DATA(lt_billdocs).
+
+  LOOP AT lt_billdocs INTO DATA(ls_billdoc).
+    MODIFY ENTITIES OF zrng_i_bill_header IN LOCAL MODE
+      ENTITY Header
+      CREATE FIELDS ( BillType BillDate CustomerId NetAmount Currency SalesOrg )
+      WITH VALUE #( (
+        %cid       = keys[ KEY entity %tky = ls_billdoc-%tky ]-%cid
+        BillType   = ls_billdoc-BillType
+        BillDate   = ls_billdoc-BillDate
+        CustomerId = ls_billdoc-CustomerId
+        NetAmount  = ls_billdoc-NetAmount
+        Currency   = ls_billdoc-Currency
+        SalesOrg   = ls_billdoc-SalesOrg
+      ) )
+      MAPPED DATA(mapped_create).
+
+    mapped-header = mapped_create-header.
+  ENDLOOP.
+
+  ENDMETHOD.
 
 ENDCLASS.

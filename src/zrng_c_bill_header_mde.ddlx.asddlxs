@@ -24,7 +24,8 @@ annotate entity zrng_c_bill_header with
     lineItem:       [ { position: 10 },
     { position: 10, type: #FOR_ACTION,
   dataAction: 'updateBillingDate',
-  label: 'Reset Billing Date' } ],
+  label: 'Reset Billing Date' },
+  { type: #FOR_ACTION, dataAction: 'CopyBillingDoc', label: 'Copy' } ],
     identification: [ { position: 10 } ],
     selectionField: [ { position: 10 } ]
   }

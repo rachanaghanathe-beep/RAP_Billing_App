@@ -29,6 +29,7 @@ early numbering
   validation validateAmount on save { field NetAmount; create; update; }
 
   action updateBillingDate result [1] $self;
+  factory action CopyBillingDoc [1];
 
   mapping for zrng_bill_header
   {
